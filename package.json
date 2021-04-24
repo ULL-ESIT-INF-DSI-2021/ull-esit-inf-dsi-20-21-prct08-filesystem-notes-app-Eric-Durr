@@ -1,0 +1,40 @@
+{
+  "name": "p08procesamiento_de_texto",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "build": "tsc ",
+    "coverage": "nyc npm test && nyc report --reporter=lcov",
+    "start": "tsc && node dist/index.js",
+    "watch": "mocha --watch",
+    "doc": "typedoc; touch ./docs/.nojekyll"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chai": "^4.2.16",
+    "@types/inquirer": "^7.3.1",
+    "@types/mocha": "^8.2.2",
+    "@typescript-eslint/eslint-plugin": "^4.15.2",
+    "@typescript-eslint/parser": "^4.15.2",
+    "chai": "^4.3.4",
+    "eslint": "^7.21.0",
+    "coveralls": "^3.1.0",
+    "inquirer": "^8.0.0",
+    "lowdb": "^1.0.0",
+    "mocha": "^8.3.2",
+    "nyc": "^15.1.0",
+    "prompt": "^1.1.0",
+    "sleep-ts": "^0.1.1",
+    "ts-node": "^9.1.1",
+    "tsc-watch": "^4.2.9",
+    "typedoc": "^0.20.35",
+    "typescript": "^4.2.3"
+  },
+  "dependencies": {
+    "@types/node": "^14.14.41"
+  }
+}
