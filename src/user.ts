@@ -24,7 +24,7 @@ class User {
 
   private checkLength(): void {
     if (this.id.length < 4) {
-      for (let i = 0; i < (4 - this.id.length); ++i) {
+      while(this.id.length < 4) {
         this.id = "0" + this.id;
       }
     }

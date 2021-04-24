@@ -17,7 +17,14 @@ class Note {
                   Note.empty_entities++;
                   this.title = "Empty note " + Note.empty_entities.toString();
                 }
-              }  
+              }
+  toJSON(): string {
+    return "{\n"+
+           "\t\"title\": \""+this.title+"\",\n"+
+           "\t\"body\": \""+this.body+"\",\n"+
+           "\t\"color\": \""+this.color+"\"\n"+
+           "}";
+  }
 };
 
 export {Note};
