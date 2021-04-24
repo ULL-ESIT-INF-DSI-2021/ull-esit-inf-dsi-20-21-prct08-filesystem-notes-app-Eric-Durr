@@ -12,12 +12,16 @@
 ### ESTADO DEL REPOSITORIO
 
 **actions**
+
 [![P8 TypeScript Tests](https://github.com/ULL-ESIT-INF-DSI-2021/ull-esit-inf-dsi-20-21-prct08-filesystem-notes-app-Eric-Durr/actions/workflows/tests.yml/badge.svg)](https://github.com/ULL-ESIT-INF-DSI-2021/ull-esit-inf-dsi-20-21-prct08-filesystem-notes-app-Eric-Durr/actions/workflows/tests.yml) [![P8 code  coverage](https://github.com/ULL-ESIT-INF-DSI-2021/ull-esit-inf-dsi-20-21-prct08-filesystem-notes-app-Eric-Durr/actions/workflows/coveralls.yml/badge.svg)](https://github.com/ULL-ESIT-INF-DSI-2021/ull-esit-inf-dsi-20-21-prct08-filesystem-notes-app-Eric-Durr/actions/workflows/coveralls.yml) [![P8  Sonar-Cloud Analysis](https://github.com/ULL-ESIT-INF-DSI-2021/ull-esit-inf-dsi-20-21-prct08-filesystem-notes-app-Eric-Durr/actions/workflows/sonar-cloud.yml/badge.svg)](https://github.com/ULL-ESIT-INF-DSI-2021/ull-esit-inf-dsi-20-21-prct08-filesystem-notes-app-Eric-Durr/actions/workflows/sonar-cloud.yml)
 
 **coveralls**
+
 [![Coverage Status](https://coveralls.io/repos/github/ULL-ESIT-INF-DSI-2021/ull-esit-inf-dsi-20-21-prct08-filesystem-notes-app-Eric-Durr/badge.svg?branch=master)](https://coveralls.io/github/ULL-ESIT-INF-DSI-2021/ull-esit-inf-dsi-20-21-prct08-filesystem-notes-app-Eric-Durr?branch=master)
 
 **Sonar cloud**
+
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=ULL-ESIT-INF-DSI-2021_ull-esit-inf-dsi-20-21-prct08-filesystem-notes-app-Eric-Durr)](https://sonarcloud.io/dashboard?id=ULL-ESIT-INF-DSI-2021_ull-esit-inf-dsi-20-21-prct08-filesystem-notes-app-Eric-Durr)
 
 <!--
 [![PE102 - P8 TypeScript Tests](https://github.com/Eric-Durr/P08-PE102/actions/workflows/tests.yml/badge.svg)](https://github.com/Eric-Durr/P08-PE102/actions/workflows/tests.yml)
