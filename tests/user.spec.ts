@@ -11,5 +11,13 @@ describe("User class tests", ()=> {
     expect(testUser.ID().length).to.be.eq(4);
     expect(typeof Number(testUser.ID())).to.be.not.eq("NaN");
   })
+   
+  it("Pre ID user", ()=>{
+
+  let tinyIdUser: User = new User("Eric", "2");
+    expect(tinyIdUser.ID().length).to.be.eq(4);
+    expect(typeof Number(testUser.ID())).to.be.not.eq("NaN");
+  })
 })
+
 
