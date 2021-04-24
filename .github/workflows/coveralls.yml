@@ -1,4 +1,4 @@
-name: PE102 - P8 code  coverage
+name: P8 code  coverage
 
 on:
   push:

@@ -1,5 +1,5 @@
   
-name: PE102 - P8  Sonar-Cloud Analysis
+name: P8  Sonar-Cloud Analysis
 
 on:
   push:

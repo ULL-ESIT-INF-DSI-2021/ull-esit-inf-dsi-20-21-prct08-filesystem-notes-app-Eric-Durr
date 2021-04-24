@@ -1,4 +1,4 @@
-name: PE102 - P8 TypeScript Tests
+name: P8 TypeScript Tests
 
 on:
   push:
