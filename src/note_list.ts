@@ -1,6 +1,6 @@
 import {User} from "./user";
 import {Note} from "./note";
-import * as chalk from "chalk";
+const chalk = require('chalk');
 // import * as fs from "fs";
 
 
@@ -10,7 +10,7 @@ class NoteList {
     this.notes = notes;        
   }
   addNote(newNote: Note): void {
-    this.notes.forEach((note) => {
+    this.notes.every((note) => {
       if (note.title === newNote.title) {
         console.error(chalk.red.bold("Note " + newNote.title + " allready exists."));
         return;
@@ -20,7 +20,7 @@ class NoteList {
     console.log(chalk.green.bold("Added " + newNote.title + " to the user "+ this.user.name +" note list."));
   }  
   modNote(title: string, body:string): void {
-    this.notes.forEach((note) => {
+    this.notes.every((note) => {
       if (note.title === title) {
         note.body = body;
         return;
@@ -29,7 +29,7 @@ class NoteList {
     console.error(chalk.red.bold("Note " + title + " doesn't exist in this list."));
   }
   appendNote(title: string, body:string): void {
-    this.notes.forEach((note) => {
+    this.notes.every((note) => {
       if (note.title === title) {
         note.body +="\n"+body;
         return;
@@ -48,8 +48,8 @@ class NoteList {
     }
   }
   showNotes(): void {
-    this.notes.forEach((note)=>{
-      
+    this.notes.every((note)=>{
+  
       switch(note.color) {
         case "black":
           console.log(chalk.white.bgBlack.bold(note.title));
@@ -73,14 +73,15 @@ class NoteList {
           console.log(chalk.black.bgYellow.bold(note.title));
           break;
         case"white":
+        break;
         default:
-          console.log(chalk.black.bgWhite.bold(note.title));
+          console.log(chalk.black.bgWhite(note.title));
           break;
       }
     })
   }
   readNote(title: string): void {
-    this.notes.forEach((note)=>{
+    this.notes.every((note)=>{
       if (note.title === title) {
         switch(note.color) {
           case "black":

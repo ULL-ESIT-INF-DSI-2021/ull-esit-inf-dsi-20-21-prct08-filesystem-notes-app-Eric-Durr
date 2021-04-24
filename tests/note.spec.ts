@@ -5,13 +5,13 @@ import {Note} from "../src/note";
 describe("Default Note class tests", ()=> {
   it("Note creation returns no user, empty content and default color", ()=>{
     let defaultNote: Note = new Note();
-    expect(defaultNote.title).to.be.eq("Empty note 1");
+    expect(defaultNote.title).to.be.eq("Empty note 2");
     expect(defaultNote.body).to.be.eq("");
     expect(defaultNote.color).to.be.eq("default");
     expect(defaultNote.toJSON())
     .to.be.eq(
       "{\n"+
-      "\t\"title\": \"Empty note 1\",\n"+
+      "\t\"title\": \"Empty note 2\",\n"+
       "\t\"body\": \"\",\n"+
       "\t\"color\": \"default\"\n"+
       "}"
@@ -19,7 +19,7 @@ describe("Default Note class tests", ()=> {
   });
   it("Second note increases the empty note counter", ()=>{
     let defaultNote: Note = new Note();
-    expect(defaultNote.title).to.be.eq("Empty note 2");
+    expect(defaultNote.title).to.be.eq("Empty note 3");
     expect(defaultNote.body).to.be.eq("");
     expect(defaultNote.color).to.be.eq("default");
   });
