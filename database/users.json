@@ -1,0 +1,15 @@
+{
+  "Users": [
+    {
+      "user": "Default",
+      "notes": [
+        {
+          "title": "Empty note 1",
+          "color": "default",
+          "content": ""
+        }
+      ],
+      "id": "0123"
+    }
+  ]
+}
