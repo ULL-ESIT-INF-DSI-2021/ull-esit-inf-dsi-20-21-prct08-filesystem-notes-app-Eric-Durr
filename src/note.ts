@@ -1,5 +1,5 @@
 
-type color = "default" | "white" | "red" | 
+type Color = "default" | "white" | "red" | 
              "black" | "pink" | "yellow" | 
              "blue" | "green" | "orange"
 class Note {
@@ -21,4 +21,4 @@ class Note {
   }
 };
 
-export {Note};
+export {Note, Color};

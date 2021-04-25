@@ -1,112 +1,151 @@
-// import {NoteList} from "./note_list"
-// import {User} from "./note_list"
-// import {Note} from "./note"
-
 import  * as yargs from "yargs";
+import {NoteList} from "./note_list"
+import {User} from "./user"
+import { Note } from "./note";
 
-yargs
-.command('add', "Add a new note",{
-  user: {
-    describe: 'List owner',
-    demand: true,
-    alias: 'u',
-    type: "string"
+yargs.command({
+  command: 'add',
+  describe: 'Add a new note',
+  builder: {
+      user: {
+        describe: 'List owner',
+        demand: true,
+        alias: 'u',
+        type: "string"
+      },
+      title: {
+          describe: 'Note title',
+          demand: true,
+          alias: 't',
+          type: "string"
+      },
+      body: {
+          describe: 'Note body',
+          demand: false,
+          alias: 'b',
+          type: "string"
+      },
+      color: {
+          describe: 'Note color',
+          demand: false,
+          alias: 'c'
+      }
   },
-  title: {
-      describe: 'Note title',
-      demand: true,
-      alias: 't',
-      type: "string"
+  handler(argv) {
+    if ( typeof argv.user === 'string' 
+         && typeof argv.title === 'string') {
+        const noteList = new NoteList(new User(argv.user));
+        if (typeof argv.body === 'string') {
+          if (typeof argv.color !== "undefined") {
+            noteList.addNote(new Note(argv.title, argv.body, argv.color));
+            noteList.saveNotes();
+          } else {
+            noteList.addNote(new Note(argv.title, argv.body));
+            noteList.saveNotes();
+          }
+        } else {
+          noteList.addNote(new Note(argv.title));
+          noteList.saveNotes();
+        }
+    }
   },
-  body: {
-      describe: 'Note body',
-      demand: false,
-      alias: 'b',
-      type: "string"
+});
+
+yargs.command({
+  command: 'modify',
+  describe: 'modify note content',
+  builder: {
+      user: {
+        describe: 'List owner',
+        demand: true,
+        alias: 'u',
+        type: "string"
+      },
+      title: {
+          describe: 'Note title',
+          demand: true,
+          alias: 't',
+          type: "string"
+      },
+      body: {
+          describe: 'Note body',
+          demand: false,
+          alias: 'b',
+          type: "string"
+      }
   },
-  color: {
-      describe: 'Note color',
-      demand: false,
-      alias: 'c',
-      type: "string"
-  }
-})
-.command('modify', "Change text to existing note",{
-  user: {
-    describe: 'List owner',
-    demand: true,
-    alias: 'u',
-    type: "string"
+  handler(argv) {
+    if ( typeof argv.user === 'string' 
+         && typeof argv.title === 'string') {
+        const noteList = new NoteList(new User(argv.user));
+        noteList.loadNote(argv.title);
+        if (typeof argv.body === 'string') {
+            noteList.modNote(argv.title, argv.body);
+        }       
+    }
   },
-  title: {
-      describe: 'Note title',
-      demand: true,
-      alias: 't',
-      type: "string"
+});
+
+
+yargs.command({
+  command: 'append',
+  describe: 'append to note content',
+  builder: {
+      user: {
+        describe: 'List owner',
+        demand: true,
+        alias: 'u',
+        type: "string"
+      },
+      title: {
+          describe: 'Note title',
+          demand: true,
+          alias: 't',
+          type: "string"
+      },
+      body: {
+          describe: 'Note body',
+          demand: false,
+          alias: 'b',
+          type: "string"
+      }
   },
-  body: {
-      describe: 'Note body',
-      demand: false,
-      alias: 'b',
-      type: "string"
-  }
-})
-.command('append', "Add text to existing note",{
-  user: {
-    describe: 'List owner',
-    demand: true,
-    alias: 'u',
-    type: "string"
+  handler(argv) {
+    if ( typeof argv.user === 'string' 
+         && typeof argv.title === 'string') {
+        const noteList = new NoteList(new User(argv.user));
+        noteList.loadNote(argv.title);
+        if (typeof argv.body === 'string') {
+            noteList.appendNote(argv.title, argv.body);
+        }       
+    }
   },
-  title: {
-      describe: 'Note title',
-      demand: true,
-      alias: 't',
-      type: "string"
+});
+
+yargs.command({
+  command: 'remove',
+  describe: 'remove a note',
+  builder: {
+      user: {
+        describe: 'List owner',
+        demand: true,
+        alias: 'u',
+        type: "string"
+      },
+      title: {
+          describe: 'Note title',
+          demand: true,
+          alias: 't',
+          type: "string"
+      }
   },
-  body: {
-      describe: 'Note body',
-      demand: false,
-      alias: 'b',
-      type: "string"
-  }
-})
-.command('list', "List all notes", {
-  user: {
-    describe: 'List owner',
-    demand: true,
-    alias: 'u',
-    type: "string"
+  handler(argv) {
+    if ( typeof argv.user === 'string' 
+         && typeof argv.title === 'string') {
+        const noteList = new NoteList(new User(argv.user));
+         noteList.rmNote(argv.title);
+    }
   },
-})
-.command('remove', "Remove an existing note", {
-  user: {
-    describe: 'List owner',
-    demand: true,
-    alias: 'u',
-    type: "string"
-  },
-  title: {
-      describe: 'Note title',
-      demand: true,
-      alias: 't',
-      type: "string"
-  }
-})
-.command('read', "open a single note", {
-  user: {
-    describe: 'List owner',
-    demand: true,
-    alias: 'u',
-    type: "string"
-  },
-  title: {
-      describe: 'Title of TODO',
-      demand: true,
-      alias: 't'
-  }
-})
-.help('h')
-.argv;
+});
 
 yargs.parse();
