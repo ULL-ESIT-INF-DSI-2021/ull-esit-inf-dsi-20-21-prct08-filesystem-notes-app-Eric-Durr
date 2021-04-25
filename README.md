@@ -23,11 +23,6 @@
 
 [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=ULL-ESIT-INF-DSI-2021_ull-esit-inf-dsi-20-21-prct08-filesystem-notes-app-Eric-Durr)](https://sonarcloud.io/dashboard?id=ULL-ESIT-INF-DSI-2021_ull-esit-inf-dsi-20-21-prct08-filesystem-notes-app-Eric-Durr)
 
-<!--
-[![PE102 - P8 TypeScript Tests](https://github.com/Eric-Durr/P08-PE102/actions/workflows/tests.yml/badge.svg)](https://github.com/Eric-Durr/P08-PE102/actions/workflows/tests.yml)
-[![PE102 - P8 code  coverage](https://github.com/Eric-Durr/P08-PE102/actions/workflows/coveralls.yml/badge.svg)](https://github.com/Eric-Durr/P08-PE102/actions/workflows/coveralls.yml)
-[![PE102 - P8  Sonar-Cloud Analysis](https://github.com/Eric-Durr/P08-PE102/actions/workflows/sonar-cloud.yml/badge.svg)](https://github.com/Eric-Durr/P08-PE102/actions/workflows/sonar-cloud.yml)[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Eric-Durr_P08-PE102&metric=alert_status)](https://sonarcloud.io/dashboard?id=Eric-Durr_P08-PE102)
--->
 
 <br>
 <br>
@@ -43,8 +38,6 @@
 ## **ÍNDICE**
  
 - ### [Introducción](#ap1)
-- ### [Objetivos](#ap2)
-- ### [Actividades previas a la práctica](#ap3)
 - ### [Desarrollo de la aplicación](#ap4)
 - ### [Conclusiones](#ap5)
 - ### [Referencias](#ap6)
@@ -68,7 +61,12 @@
   
  <!--Text goes here-->
 
+En esta práctica se propone el uso de las herramientas chalk y yarg, el alumno deberá crear, mediante un desarrollo TDD y empleando en la media de lo posible los principios SOLID, una aplicación de gestión de notas. Se usará el sistema de archivos cómo base de datos para cargar, guardar, modificar y leer las notas creadas.
+
  <!--              -->
+
+<br>
+
 
 <br>
  
@@ -77,42 +75,7 @@
 <br>
 <br>
  
-<div id="ap2"></div>
 
-## **OBJETIVOS**
-
-
-<br>
-  
- <!--Text goes here-->
-
- <!--              -->
-
-<br>
- 
-[índice](#inx)
-
-<br>
-<br>
- 
-<div id="ap3"></div>
-
-
-## **ACTIVIDADES PREVIAS A LA PRÁCTICA**
-
-
-<br>
-  
- <!--Text goes here-->
-
- <!--              -->
-
-<br>
- 
-[índice](#inx)
-
-<br>
-<br>
  
 <div id="ap4"></div>
 
@@ -124,6 +87,7 @@
   
  <!--Text goes here-->
 
+Esta aplicación se estructura mediante tres clases (User, Note y NoteList)  y un fichero principal... 
  <!--              -->
 
 <br>
