@@ -10,64 +10,137 @@ class NoteList {
     this.notes = notes;        
   }
   addNote(newNote: Note): void {
-    let exists: boolean = false;
-    this.notes.every((note) => {
-      if (note.title === newNote.title) {
-        exists = true;
+    const path: string = "./"+this.user.name;
+    const noSpaceTitle: string = newNote.title.split(" ").join("_");
+    const filename: string = path + "/" + noSpaceTitle + ".JSON";
+    fs.mkdir(path, (err) => {
+      if(err) {
+        console.log(chalk.green.bold("Recognized user"))
+      } else {
+        console.log(chalk.green.bold("Creating new folder"))
       }
+      if (fs.existsSync(filename)) {
+        console.log(chalk.red.bold("Note " + newNote.title + " allready exists."));
+      } else {
+        this.saveNote(newNote);
+        console.log(chalk.green.bold("Added " + newNote.title + " to the user "+ this.user.name +" note list."));  
+      }    
     });
-    if (exists) {
-      console.log(chalk.red.bold("Note " + newNote.title + " allready exists."));
-      
-    } else {
-      this.notes.push(newNote);
-      console.log(chalk.green.bold("Added " + newNote.title + " to the user "+ this.user.name +" note list."));  
-    }
   }  
   modNote(title: string, body:string): void {
-    let modifyed: boolean = false;
-    this.notes.every((note) => {
-      if (note.title === title) {
-        note.body = body;
-        modifyed = true; 
-      }
-    });
-    if (modifyed) {
-      console.log(chalk.green.bold("Note " + title + " modifyed."));
+    let note: Note;
+    const path: string = "./"+this.user.name;
+
+    if (fs.existsSync(path)) {
+      const noSpaceTitle: string = title.split(" ").join("_");
+      const filename: string = path + "/" + noSpaceTitle + ".JSON";
+      fs.readFile(filename, "utf-8", (err, data) => {
+        if (err) {
+          console.log(chalk.red.bold("Note " + title + " doesn't exist in this list."));
+        } else {
+          let readed = JSON.parse(data.toString());
+          note = new Note(readed["title"],readed["body"],readed["color"]);
+          note.body = body;
+          console.log(chalk.green.bold("Note " + title + " has been modified"));
+          this.saveNote(note);
+        }
+      });     
     } else {
-      console.log(chalk.red.bold("Note " + title + " doesn't exist in this list."));
+      console.log(chalk.red.bold("Unecognized user, must add at least 1 note"));
     }
+
   }
   appendNote(title: string, body:string): void {
-    let appended: boolean = false;
-    this.notes.every((note) => {
-      if (note.title === title) {
-        appended = true
-        note.body +="\n"+body;
-      }
-    });
-    if (appended) {
-      console.log(chalk.green.bold("Note " + title + " has added text."));
+    let note: Note;
+    const path: string = "./"+this.user.name;
+
+    if (fs.existsSync(path)) {
+      const noSpaceTitle: string = title.split(" ").join("_");
+      const filename: string = path + "/" + noSpaceTitle + ".JSON";
+      fs.readFile(filename, "utf-8", (err, data) => {
+        if (err) {
+          console.log(chalk.red.bold("Note " + title + " doesn't exist in this list."));
+        } else {
+          let readed = JSON.parse(data.toString());
+          note = new Note(readed["title"],readed["body"],readed["color"]);
+          note.body += body;
+          console.log(chalk.green.bold("Note " + title + " has added text."));
+          this.saveNote(note);
+        }
+      });
     } else {
-      console.log(chalk.red.bold("Note " + title + " doesn't exist in this list."));
+      console.log(chalk.red.bold("Unecognized user, must add at least 1 note"));
     }
   }
 
   rmNote(title: string): void {
-    let prelength: number = this.notes.length;
-    this.notes = this.notes.filter((note) => {
-      return note.title === title
-    });
-
-    if (prelength !== this.notes.length) {
-      console.log(chalk.red.bold("Note " + title + " doesn't exist in this list."));
-    } else {
-      console.log(chalk.green.bold("Note " + title + " deleted."));  
+      const path: string = "./"+this.user.name;
+      if (fs.existsSync(path)) {
+        const noSpaceTitle: string = title.split(" ").join("_");
+        const filename: string = path + "/" + noSpaceTitle + ".JSON";
+        fs.unlink(filename, (err) => {
+          if (err) {
+              console.log(chalk.red.bold("Error deleting note"));
+          } else {
+            console.log(chalk.green.bold("Note " + title + " deleted."));  
+          }
+        });
+      } else {
+        console.log(chalk.red.bold("Unecognized user, must add at least 1 note"));
+        return;
+      }
     }
-  }
-  showNotes(): void {
-    this.notes.forEach((note)=>{
   
+  showNotes(): void {
+    
+    const path: string = "./"+this.user.name;
+    if (fs.existsSync(path)) {
+      fs.readdirSync(path).forEach((element) => {
+        const filename: string = path + "/" + element;
+        fs.readFile(filename, "utf-8", (err, data) => {
+            let readed = JSON.parse(data.toString());
+            const note = new Note(readed["title"],readed["body"],readed["color"]);
+            switch(note.color) {
+              case "black": {
+                console.log(chalk.white.bgBlack.bold(note.title));
+                break;
+              }
+              case "blue": {
+                console.log(chalk.white.bgBlue.bold(note.title));
+                break;
+              }
+              case "green": {
+                console.log(chalk.black.bgGreen.bold(note.title));
+                break;
+              }
+              case "orange": {
+                console.log(chalk.black.redBright.bold(note.title));
+                break;
+              }
+              case "pink": {
+                console.log(chalk.white.bgMagenta.bold(note.title));
+                break;
+              }
+              case "red": {
+                console.log(chalk.black.bgRed.bold(note.title));
+                break;
+              }
+              case "yellow": {
+                console.log(chalk.black.bgYellow.bold(note.title));
+                break;
+              }
+              case"white":
+              default: {
+                console.log(chalk.black.bgWhite.bold(note.title));
+              }
+          }
+        });
+      });
+    } else {
+      console.log(chalk.red.bold("Unecognized user, must add at least 1 note"));  
+    }
+
+    this.notes.forEach((note)=>{
       switch(note.color) {
         case "black":
           console.log(chalk.white.bgBlack.bold(note.title));
@@ -98,10 +171,16 @@ class NoteList {
     })
   }
   readNote(title: string): void {
-    let readed: boolean = false;
-    this.notes.forEach((note)=>{
-      if (note.title === title) {
-        readed = true;
+    let note: Note;
+    const path: string = "./"+this.user.name;
+    const noSpaceTitle: string = title.split(" ").join("_");
+    const filename: string = path + "/" + noSpaceTitle + ".JSON";
+    fs.readFile(filename, "utf-8", (err, data) => {
+      if (err) {
+        console.log(chalk.red.bold("Note does not exists"));
+      } else {
+        let readed = JSON.parse(data.toString());
+        note = new Note(readed["title"],readed["body"],readed["color"]);
         switch(note.color) {
           case "black": {
             console.log(chalk.white.bgBlack.bold(note.title));
@@ -146,26 +225,18 @@ class NoteList {
           }
       }
     }
-    });
-    if (readed) {
-    } else {
-      console.log(chalk.red.bold("Note " + title + " doesn't exist in this list."))
-    }
-    
-  }
-
-  saveNotes(): void {
+  });
+}
+  saveNote( note: Note): void {
     const path: string = "./"+this.user.name;
     fs.mkdir(path, (err) => {
     });
-    this.notes.every((note) => {
-       const noSpaceTitle: string = note.title.split(" ").join("_");
-       const filename: string = path + "/" + noSpaceTitle + ".JSON";
-       fs.writeFile(filename, note.toJSON(), (err)=>{
-         if (!err) {
-           console.log(chalk.green.bold("Note saved in " + noSpaceTitle ));
-         }
-       });
+    const noSpaceTitle: string = note.title.split(" ").join("_");
+    const filename: string = path + "/" + noSpaceTitle + ".JSON";
+    fs.writeFile(filename, note.toJSON(), (err)=>{
+      if (!err) {
+        console.log(chalk.green.bold("Note saved in " + noSpaceTitle ));
+      }
     });
   }
 
@@ -174,13 +245,13 @@ class NoteList {
     const noSpaceTitle: string = title.split(" ").join("_");
     const filename: string = path + "/" + noSpaceTitle + ".JSON";
        
-    fs.open(filename, "r", (err) => {
+    fs.readFile(filename, "utf-8", (err, data) => {
       if (err) {
         console.log(chalk.red.bold("Note does not exists"));
       } else {
         console.log(chalk.green.bold("Note JSON oppened"));
-        let data = JSON.parse(fs.readFileSync(filename, 'utf-8'));
-        this.addNote(new Note(data["title"], data["body"], data["color"]));
+        let readed = JSON.parse(data.toString());
+        this.addNote(new Note(readed["title"],readed["body"],readed["color"]));
       }
     })
   }

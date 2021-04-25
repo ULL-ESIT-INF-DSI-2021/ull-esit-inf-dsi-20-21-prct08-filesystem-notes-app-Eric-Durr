@@ -1,7 +1,7 @@
 import  * as yargs from "yargs";
 import {NoteList} from "./note_list"
 import {User} from "./user"
-import { Note } from "./note";
+import { Note} from "./note";
 
 yargs.command({
   command: 'add',
@@ -36,16 +36,13 @@ yargs.command({
          && typeof argv.title === 'string') {
         const noteList = new NoteList(new User(argv.user));
         if (typeof argv.body === 'string') {
-          if (typeof argv.color !== "undefined") {
+          if (typeof argv.color === 'string') {
             noteList.addNote(new Note(argv.title, argv.body, argv.color));
-            noteList.saveNotes();
           } else {
             noteList.addNote(new Note(argv.title, argv.body));
-            noteList.saveNotes();
           }
         } else {
           noteList.addNote(new Note(argv.title));
-          noteList.saveNotes();
         }
     }
   },
@@ -78,10 +75,15 @@ yargs.command({
     if ( typeof argv.user === 'string' 
          && typeof argv.title === 'string') {
         const noteList = new NoteList(new User(argv.user));
-        noteList.loadNote(argv.title);
-        if (typeof argv.body === 'string') {
+     
+          if (typeof argv.body === 'string') {
+     
+
+            noteList.loadNote(argv.title);
+            
             noteList.modNote(argv.title, argv.body);
-        }       
+          } 
+           
     }
   },
 });
@@ -114,7 +116,6 @@ yargs.command({
     if ( typeof argv.user === 'string' 
          && typeof argv.title === 'string') {
         const noteList = new NoteList(new User(argv.user));
-        noteList.loadNote(argv.title);
         if (typeof argv.body === 'string') {
             noteList.appendNote(argv.title, argv.body);
         }       
@@ -144,6 +145,54 @@ yargs.command({
          && typeof argv.title === 'string') {
         const noteList = new NoteList(new User(argv.user));
          noteList.rmNote(argv.title);
+    }
+  },
+});
+
+
+yargs.command({
+  command: 'read',
+  describe: 'read a single note',
+  builder: {
+      user: {
+        describe: 'List owner',
+        demand: true,
+        alias: 'u',
+        type: "string"
+      },
+      title: {
+          describe: 'Note title',
+          demand: true,
+          alias: 't',
+          type: "string"
+      }
+  },
+  handler(argv) {
+    if ( typeof argv.user === 'string' 
+         && typeof argv.title === 'string') {
+        const noteList = new NoteList(new User(argv.user));
+        noteList.readNote(argv.title);
+        
+    }
+  },
+});
+
+yargs.command({
+  command: 'show',
+  describe: 'list all notes',
+  builder: {
+      user: {
+        describe: 'List owner',
+        demand: true,
+        alias: 'u',
+        type: "string"
+      }
+  },
+  handler(argv) {
+    if ( typeof argv.user === 'string' 
+         && typeof argv.title === 'string') {
+        const noteList = new NoteList(new User(argv.user));
+         noteList.showNotes();
     }
   },
 });
