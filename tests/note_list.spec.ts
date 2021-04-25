@@ -84,4 +84,24 @@ describe("Testing note list", ()=> {
         .to.be.eql(["\u001b[32m\u001b[1mNote Empty note 1 deleted.\u001b[22m\u001b[39m\n"]);
     expect(stdout.inspectSync(()=> newNoteList.showNotes())).to.be.eql([]);
   });
+
+  it("Saving a note list stores the data in the JSON files at users directory - case with notes", ()=>{
+    newNoteList.addNote(new Note("Random content", "some random content", "red"));
+    newNoteList.addNote(new Note("More content","some more content", "blue"));
+    expect(stdout.inspectSync(()=> newNoteList.saveNotes())).to.be.eql([]);
+  });
+  
+  it("Loading a note that exists launches the information message", () => {
+    expect(stdout.inspectSync(()=> newNoteList.loadNote("Random content"))).to.be.eql([]);
+    expect(stdout.inspectSync(()=> newNoteList.showNotes()))
+        .to.be.eql(["\u001b[30m\u001b[41m\u001b[1mRandom content\u001b[22m\u001b[49m\u001b[39m\n"]);
+
+    expect(stdout.inspectSync(()=> newNoteList.readNote("Random content")))
+    .to.be.eql(["\u001b[30m\u001b[41m\u001b[1mRandom content\u001b[22m\u001b[49m\u001b[39m\n",
+                "\u001b[30m\u001b[41msome random content\u001b[49m\u001b[39m\n"]);
+  }) 
+
+  it("Loading a non existing note launches the error message", () => {
+    expect(stdout.inspectSync(()=> newNoteList.loadNote("No registered content"))).to.be.eql([]);
+  }) 
 });

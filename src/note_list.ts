@@ -1,7 +1,7 @@
 import {User} from "./user";
 import {Note} from "./note";
 const chalk = require('chalk');
-// import * as fs from "fs";
+import * as fs from "fs";
 
 
 class NoteList {
@@ -140,17 +140,42 @@ class NoteList {
       }
     }
     });
-    if (readed == false)
-    {
+    if (readed == false) {
       console.log(chalk.red.bold("Note " + title + " doesn't exist in this list."))
     };
   }
 
-  // saveNote(): void {
-  //   const path = "./"+this.user.name;
-  //   fs.mkdir(path, (err) => {
-  //   });
-  // }
+  saveNotes(): void {
+    const path: string = "./"+this.user.name;
+    fs.mkdir(path, (err) => {
+    });
+    this.notes.every((note) => {
+       const noSpaceTitle: string = note.title.split(" ").join("_");
+       const filename: string = path + "/" + noSpaceTitle + ".JSON";
+       fs.writeFile(filename, note.toJSON(), (err)=>{
+         if (err) {
+         } else {
+           console.log(chalk.green.bold("Note saved in " + noSpaceTitle ));
+         }
+       });
+    });
+  }
+
+  loadNote(title: string) {
+    const path: string = "./"+this.user.name;
+    const noSpaceTitle: string = title.split(" ").join("_");
+    const filename: string = path + "/" + noSpaceTitle + ".JSON";
+       
+    fs.open(filename, "r", (err) => {
+      if (err) {
+        console.log(chalk.red.bold("Note does not exists"));
+      } else {
+        console.log(chalk.green.bold("Note JSON oppened"));
+        let data = JSON.parse(fs.readFileSync(filename, 'utf-8'));
+        this.addNote(new Note(data.title, data.body, data.color))
+      }
+    })
+  }
 };
 
 
