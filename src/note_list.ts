@@ -66,7 +66,7 @@ class NoteList {
     }
   }
   showNotes(): void {
-    this.notes.every((note)=>{
+    this.notes.forEach((note)=>{
   
       switch(note.color) {
         case "black":
@@ -79,7 +79,7 @@ class NoteList {
           console.log(chalk.black.bgGreen.bold(note.title));
           break;
         case "orange":
-          console.log(chalk.black.redBright.bold(note.title));
+          console.log(chalk.black.bgRedBright.bold(note.title));
           break;
         case "pink":
           console.log(chalk.white.bgMagenta.bold(note.title));
@@ -91,7 +91,6 @@ class NoteList {
           console.log(chalk.black.bgYellow.bold(note.title));
           break;
         case"white":
-        break;
         default:
           console.log(chalk.black.bgWhite(note.title));
           break;
@@ -100,49 +99,59 @@ class NoteList {
   }
   readNote(title: string): void {
     let readed: boolean = false;
-    this.notes.every((note)=>{
+    this.notes.forEach((note)=>{
       if (note.title === title) {
         readed = true;
         switch(note.color) {
-          case "black":
+          case "black": {
             console.log(chalk.white.bgBlack.bold(note.title));
             console.log(chalk.white.bgBlack(note.body));
             break;
-          case "blue":
+          }
+          case "blue": {
             console.log(chalk.white.bgBlue.bold(note.title));
             console.log(chalk.white.bgBlue(note.body));
             break;
-          case "green":
+          }
+          case "green": {
             console.log(chalk.black.bgGreen.bold(note.title));
             console.log(chalk.black.bgGreen(note.body));
             break;
-          case "orange":
+          }
+          case "orange": {
             console.log(chalk.black.redBright.bold(note.title));
             console.log(chalk.black.redBright(note.body));
             break;
-          case "pink":
+          }
+          case "pink": {
             console.log(chalk.white.bgMagenta.bold(note.title));
             console.log(chalk.white.bgMagenta(note.body));
             break;
-          case "red":
+          }
+          case "red": {
             console.log(chalk.black.bgRed.bold(note.title));
             console.log(chalk.black.bgRed(note.body));
             break;
-          case "yellow":
+          }
+          case "yellow": {
             console.log(chalk.black.bgYellow.bold(note.title));
             console.log(chalk.black.bgYellow(note.body));
             break;
+          }
           case"white":
-          default:
+          default: {
             console.log(chalk.black.bgWhite.bold(note.title));
             console.log(chalk.black.bgWhite(note.body));
             break;
+          }
       }
     }
     });
-    if (readed == false) {
+    if (readed) {
+    } else {
       console.log(chalk.red.bold("Note " + title + " doesn't exist in this list."))
-    };
+    }
+    
   }
 
   saveNotes(): void {
@@ -153,8 +162,7 @@ class NoteList {
        const noSpaceTitle: string = note.title.split(" ").join("_");
        const filename: string = path + "/" + noSpaceTitle + ".JSON";
        fs.writeFile(filename, note.toJSON(), (err)=>{
-         if (err) {
-         } else {
+         if (!err) {
            console.log(chalk.green.bold("Note saved in " + noSpaceTitle ));
          }
        });
@@ -172,7 +180,7 @@ class NoteList {
       } else {
         console.log(chalk.green.bold("Note JSON oppened"));
         let data = JSON.parse(fs.readFileSync(filename, 'utf-8'));
-        this.addNote(new Note(data.title, data.body, data.color))
+        this.addNote(new Note(data["title"], data["body"], data["color"]));
       }
     })
   }

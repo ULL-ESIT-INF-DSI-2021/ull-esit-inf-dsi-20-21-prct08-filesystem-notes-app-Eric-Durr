@@ -91,17 +91,52 @@ describe("Testing note list", ()=> {
     expect(stdout.inspectSync(()=> newNoteList.saveNotes())).to.be.eql([]);
   });
   
-  it("Loading a note that exists launches the information message", () => {
-    expect(stdout.inspectSync(()=> newNoteList.loadNote("Random content"))).to.be.eql([]);
-    expect(stdout.inspectSync(()=> newNoteList.showNotes()))
-        .to.be.eql(["\u001b[30m\u001b[41m\u001b[1mRandom content\u001b[22m\u001b[49m\u001b[39m\n"]);
-
-    expect(stdout.inspectSync(()=> newNoteList.readNote("Random content")))
-    .to.be.eql(["\u001b[30m\u001b[41m\u001b[1mRandom content\u001b[22m\u001b[49m\u001b[39m\n",
-                "\u001b[30m\u001b[41msome random content\u001b[49m\u001b[39m\n"]);
-  }) 
-
-  it("Loading a non existing note launches the error message", () => {
-    expect(stdout.inspectSync(()=> newNoteList.loadNote("No registered content"))).to.be.eql([]);
-  }) 
 });
+describe("saving and loading notes", () => {
+
+  let emptyNoteList: NoteList = new NoteList(new User("Eric")); 
+  emptyNoteList.loadNote("Random content");
+  emptyNoteList.showNotes();
+  emptyNoteList.loadNote("non existing note");
+  
+});
+
+describe("teasting each color output in notes", ()=>{
+  const redNote: Note = new Note("red note", "this is the body", "red");
+  const blackNote: Note = new Note("black note", "this is the body", "black");
+  const orangeNote: Note = new Note("orange note", "this is the body", "orange");
+  const pinkNote: Note = new Note("pink note", "this is the body", "pink");
+  const blueNote: Note = new Note("blue note", "this is the body", "blue");
+  const greenNote: Note = new Note("green note", "this is the body", "green");
+  const yellowNote: Note = new Note("yellow note", "this is the body", "yellow");
+  it ("outputting a note list titles", ()=> {
+    let rainbowList: NoteList = new NoteList(new User("Eric"));
+    rainbowList.addNote(redNote);
+    rainbowList.addNote(blackNote);
+    rainbowList.addNote(orangeNote);
+    rainbowList.addNote(pinkNote);
+    rainbowList.addNote(blueNote);
+    rainbowList.addNote(greenNote);
+    rainbowList.addNote(yellowNote);
+    rainbowList.showNotes();
+  });
+  it ("showing each note content", () => {
+    let rainbowList: NoteList = new NoteList(new User("Eric"));
+    rainbowList.addNote(redNote);
+    rainbowList.addNote(blackNote);
+    rainbowList.addNote(orangeNote);
+    rainbowList.addNote(pinkNote);
+    rainbowList.addNote(blueNote);
+    rainbowList.addNote(greenNote);
+    rainbowList.addNote(yellowNote);
+
+    rainbowList.readNote("red note");
+    rainbowList.readNote("black note");
+    rainbowList.readNote("orange note");
+    rainbowList.readNote("pink note");
+    rainbowList.readNote("blue note");
+    rainbowList.readNote("green note");
+    rainbowList.readNote("yellow note");
+  })
+})
+
