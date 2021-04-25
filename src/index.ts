@@ -77,10 +77,6 @@ yargs.command({
         const noteList = new NoteList(new User(argv.user));
      
           if (typeof argv.body === 'string') {
-     
-
-            noteList.loadNote(argv.title);
-            
             noteList.modNote(argv.title, argv.body);
           } 
            
@@ -189,8 +185,7 @@ yargs.command({
       }
   },
   handler(argv) {
-    if ( typeof argv.user === 'string' 
-         && typeof argv.title === 'string') {
+    if ( typeof argv.user === 'string') {
         const noteList = new NoteList(new User(argv.user));
          noteList.showNotes();
     }

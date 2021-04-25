@@ -92,7 +92,6 @@ class NoteList {
     }
   
   showNotes(): void {
-    
     const path: string = "./"+this.user.name;
     if (fs.existsSync(path)) {
       fs.readdirSync(path).forEach((element) => {
