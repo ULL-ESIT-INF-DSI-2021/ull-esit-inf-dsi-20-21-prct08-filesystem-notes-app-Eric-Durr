@@ -10,41 +10,59 @@ class NoteList {
     this.notes = notes;        
   }
   addNote(newNote: Note): void {
+    let exists: boolean = false;
     this.notes.every((note) => {
       if (note.title === newNote.title) {
-        console.error(chalk.red.bold("Note " + newNote.title + " allready exists."));
-        return;
+        exists = true;
       }
     });
-    this.notes.push(newNote);
-    console.log(chalk.green.bold("Added " + newNote.title + " to the user "+ this.user.name +" note list."));
+    if (exists) {
+      console.log(chalk.red.bold("Note " + newNote.title + " allready exists."));
+      
+    } else {
+      this.notes.push(newNote);
+      console.log(chalk.green.bold("Added " + newNote.title + " to the user "+ this.user.name +" note list."));  
+    }
   }  
   modNote(title: string, body:string): void {
+    let modifyed: boolean = false;
     this.notes.every((note) => {
       if (note.title === title) {
         note.body = body;
-        return;
+        modifyed = true; 
       }
     });
-    console.error(chalk.red.bold("Note " + title + " doesn't exist in this list."));
+    if (modifyed) {
+      console.log(chalk.green.bold("Note " + title + " modifyed."));
+    } else {
+      console.log(chalk.red.bold("Note " + title + " doesn't exist in this list."));
+    }
   }
   appendNote(title: string, body:string): void {
+    let appended: boolean = false;
     this.notes.every((note) => {
       if (note.title === title) {
+        appended = true
         note.body +="\n"+body;
-        return;
       }
     });
-    console.error(chalk.red.bold("Note " + title + " doesn't exist in this list."));
+    if (appended) {
+      console.log(chalk.green.bold("Note " + title + " has added text."));
+    } else {
+      console.log(chalk.red.bold("Note " + title + " doesn't exist in this list."));
+    }
   }
 
-  rmNote(title: string, body:string): void {
+  rmNote(title: string): void {
     let prelength: number = this.notes.length;
-    this.notes.filter((note) => {
+    this.notes = this.notes.filter((note) => {
       return note.title === title
     });
+
     if (prelength !== this.notes.length) {
-      console.error(chalk.red.bold("Note " + title + " doesn't exist in this list."));
+      console.log(chalk.red.bold("Note " + title + " doesn't exist in this list."));
+    } else {
+      console.log(chalk.green.bold("Note " + title + " deleted."));  
     }
   }
   showNotes(): void {
@@ -81,8 +99,10 @@ class NoteList {
     })
   }
   readNote(title: string): void {
+    let readed: boolean = false;
     this.notes.every((note)=>{
       if (note.title === title) {
+        readed = true;
         switch(note.color) {
           case "black":
             console.log(chalk.white.bgBlack.bold(note.title));
@@ -117,8 +137,13 @@ class NoteList {
             console.log(chalk.black.bgWhite.bold(note.title));
             console.log(chalk.black.bgWhite(note.body));
             break;
-      }}
-    })
+      }
+    }
+    });
+    if (readed == false)
+    {
+      console.log(chalk.red.bold("Note " + title + " doesn't exist in this list."))
+    };
   }
 
   // saveNote(): void {
